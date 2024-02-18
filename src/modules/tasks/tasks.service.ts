@@ -5,24 +5,24 @@ import { Cron, CronExpression } from '@nestjs/schedule';
 import { getABI, getContract, getCurrentBlockNumber } from 'src/utils';
 import { BlocktrackerService } from '../tokenData/services/blockTracker.service';
 import { TokenEventService } from '../tokenData/services/tokenEvent.service';
+import { LoggerService } from '../logger/logger.service';
 
 @Injectable()
 export class TasksService {
   constructor(
     private configService: ConfigService,
+    private readonly loggerService: LoggerService,
     @Inject(BlocktrackerService)
     private readonly blockTrackerService: BlocktrackerService,
     @Inject(TokenEventService)
     private readonly tokenEventService: TokenEventService,
   ) {}
 
-  private readonly logger = new Logger(TasksService.name);
-
   private arbitratyBlockNumberToLookForward = 1000; // no bigger than 10k bcs api limitation, best range between 500 - 700 for histroical data mining
 
   @Cron(CronExpression.EVERY_5_SECONDS)
   async handleTask() {
-    this.logger.log(new Date().toISOString(), 'Start processing');
+    this.loggerService.log(new Date().toISOString(), 'Start processing');
 
     const alchemyApiKey = this.configService.get<string>('alchemyApiKey');
     const arbscanApiKey = this.configService.get<string>('arbscanApiKey');
@@ -49,7 +49,7 @@ export class TasksService {
 
       await this.blockTrackerService.updateBlock(blockId, newBlockTracker);
 
-      this.logger.log(new Date().toISOString(), 'End processing');
+      this.loggerService.log(new Date().toISOString(), 'End processing');
 
       return;
     }
@@ -76,6 +76,6 @@ export class TasksService {
 
     await this.blockTrackerService.updateBlock(blockId, blockNumber);
 
-    this.logger.log(new Date().toISOString(), 'End processing');
+    this.loggerService.log(new Date().toISOString(), 'End processing');
   }
 }

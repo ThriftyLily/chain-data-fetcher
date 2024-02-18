@@ -8,9 +8,11 @@ import configuration from '../../config/configuration';
 import { DataSource } from 'typeorm';
 import { TokenDataModule } from '../tokenData/tokenData.module';
 import typeorm from 'src/config/typeorm';
+import { LoggerModule } from '../logger/logger.module';
 
 @Module({
   imports: [
+    LoggerModule,
     TokenDataModule,
     ScheduleModule.forRoot(),
     ConfigModule.forRoot({
