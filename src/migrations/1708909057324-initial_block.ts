@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class InitialBlock1707608151674 implements MigrationInterface {
+export class InitialBlock1708909057324 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     const blockNumber = 179145104;
 

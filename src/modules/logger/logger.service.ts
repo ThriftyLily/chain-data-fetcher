@@ -51,15 +51,12 @@ export class LoggerService extends ConsoleLogger implements AppLogger {
   }
 
   private readonly logErrors =
-    this.configService.get<string>('LOG_ERRORS') === 'true';
-  private readonly logWarns =
-    this.configService.get<string>('LOG_WARNS') === 'true';
-  private readonly logInfo =
-    this.configService.get<string>('LOG_INFO') === 'true';
-  private readonly logDebug =
-    this.configService.get<string>('LOG_DEBUG') === 'true';
+    this.configService.get<boolean>('main.logErrors');
+  private readonly logWarns = this.configService.get<boolean>('main.logWarns');
+  private readonly logInfo = this.configService.get<boolean>('main.logInfo');
+  private readonly logDebug = this.configService.get<boolean>('main.logDebug');
   private readonly logVerbose =
-    this.configService.get<string>('LOG_VERBOSE') === 'true';
+    this.configService.get<boolean>('main.logVerbose');
 
   error(message: any, stack?: string, context?: LoggerServiceContext | string) {
     if (this.logErrors) {

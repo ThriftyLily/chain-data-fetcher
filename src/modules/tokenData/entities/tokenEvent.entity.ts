@@ -6,6 +6,12 @@ export class TokenEvent extends BaseEntity {
   @Column({ type: 'varchar', length: 42 })
   from: string;
 
+  @Column({ type: 'varchar', length: 42 })
+  to: string;
+
+  @Column({ type: 'bigint' })
+  value: number;
+
   @Column({ type: 'varchar' })
   txHash: string;
 
@@ -17,4 +23,7 @@ export class TokenEvent extends BaseEntity {
 
   @Column({ type: 'varchar' })
   actionType: string;
+
+  @Column({ type: 'boolean', default: false })
+  isCalculated: boolean;
 }
